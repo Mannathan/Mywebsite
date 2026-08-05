@@ -1,0 +1,26 @@
+ # Start from Ubuntu base image
+FROM ubuntu:22.04
+
+# Prevent interactive prompt during Apache install
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update and install Apache
+RUN apt-get update && \
+    apt-get install -y apache2 && \
+    apt-get clean
+
+# Copy your HTML file to Apache's default site directory
+
+COPY Github/Mywebsite/index.html /var/www/html/index.html
+COPY Github/Mywebsite/css /var/www/html/css
+COPY Github/Mywebsite/img /var/www/html/img
+COPY Github/Mywebsite/js /var/www/html/js
+COPY Github/Mywebsite/lib /var/www/html/lib
+COPY Github/Mywebsite/Mannathan-Resume.pdf /var/www/html/Mannathan-Resume.pdf
+COPY Github/Mywebsite/scss /var/www/html/scss
+
+# Expose Apache default port
+EXPOSE 80
+
+# Start Apache in the foreground
+CMD ["apachectl", "-D", "FOREGROUND"]
